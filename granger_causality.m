@@ -19,7 +19,7 @@ function check_subjects(subject_list, root_path, filename_expected)
 end 
 %% ROI + GRANGER CAUSALITY 
 
-function G_all = granger_causality(subject_list, root_path,filename_expected)
+function G_all = granger_causality_function(subject_list, root_path,filename_expected)
     nSub = length(subject_list);
     
     G_all = cell(nSub,1); 
@@ -71,7 +71,7 @@ subject_list = [
     "149716", "156484", "160890"
 ];
 check_subjects(subject_list,root_path, filename_expected); 
-G_all = granger_causality(subject_list, root_path,filename_expected);
+G_all = granger_causality_function(subject_list, root_path,filename_expected);
 G_all_ctrl = G_all;
 
 %% CHECK AND LOAD PARTICIPANTS PD 
@@ -85,7 +85,7 @@ subject_list = [
 status = "PD"; 
 filename_expected = "ROI_Subject001_Session001.mat";
 check_subjects(subject_list,root_path, filename_expected);
-G_all = granger_causality(subject_list, root_path,filename_expected);
+G_all = granger_causality_function(subject_list, root_path,filename_expected);
 G_all_pd = G_all;
 
 %% CHECK AND LOAD PARTICIPANTS PD DEP 
@@ -99,7 +99,7 @@ subject_list = [
 status = "PD_DEP"; 
 filename_expected = "ROI_Subject001_Session001.mat";
 check_subjects(subject_list,root_path, filename_expected);
-G_all = granger_causality(subject_list, root_path,filename_expected);
+G_all = granger_causality_function(subject_list, root_path,filename_expected);
 G_all_pdd = G_all;
 
 %% COMPUTE ROI 
@@ -131,7 +131,6 @@ function [G,p] = mvgc(final_data)
     %xlabel('Model order p'); ylabel('Information criterion');
    
     [~, p] = min(BIC);   % (more conservative for fMRI)
-    p = 2; 
     disp(["Chosen order (BIC):", p]);
 
     [A,SIG] = tsdata_to_var(input, p, 'LWR');
